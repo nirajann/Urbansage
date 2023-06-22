@@ -15,25 +15,27 @@ const Login = () => {
     const navigate = useNavigate();
 
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+    const handleLogin = (e) => {
+      e.preventDefault();
+    
+      userService.login({ Username, password })
+        .then((res) => {
 
-    userService.login({ Username, password })
-      .then((res) => {
-        setToken(window.localStorage.setItem(`token`,res.data.token))
-        setUserid(window.localStorage.setItem(`userid`,res.data._id))
-
-        setUsername(window.localStorage.setItem(`username`,Username))
-        setAdmin(window.localStorage.setItem('admin',res.data.isAdmin))
-        
-        navigate('/products');
-      })
-      .catch((err) => {
-        setErrorMessage('Incorrect username or password');
-        document.getElementById('login-message').classList.add('failure');
-      });
-  };
-
+          setToken(window.localStorage.setItem(`token`,res.data.token))
+          setUserid(window.localStorage.setItem(`userid`,res.data.id))
+          setUsername(window.localStorage.setItem(`username`,Username))
+          setAdmin(window.localStorage.setItem('admin',res.data.isAdmin))
+    
+    
+    
+          navigate('/products');
+        })
+        .catch((err) => {
+          setErrorMessage('Incorrect username or password');
+          document.getElementById('login-message').classList.add('failure');
+        });
+    };
+    
   return (
     <>
       <section id="login-form">

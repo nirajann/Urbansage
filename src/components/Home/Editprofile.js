@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import FormData from "form-data";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -8,6 +9,26 @@ const EditProfilePage = () => {
   const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
   const [interests, setInterests] = useState("");
+  const [image, setImage] = useState({});
+  
+  const fileonChange = (event) => {
+    setImage(event.target.files[0]);
+  };
+
+  const sendImage = () => {
+    const formData = new FormData();
+    formData.append("pic", image);
+  
+    axios
+      .post("http://localhost:4000/uploads/user/", formData)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  
 
   useEffect(() => {
     axios
@@ -44,8 +65,16 @@ const EditProfilePage = () => {
       <div className="row justify-content-center align-items-center">
         <div className="col-md-6">
           <h2>Edit Profile</h2>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={(e) => {
+  e.preventDefault();
+  sendImage();
+  handleSubmit(e);
+}}>
+
             <div className="mb-3">
+              <div>
+                <input type="file" onChange={fileonChange} />
+              </div>
               <label htmlFor="username" className="form-label">
                 Username
               </label>

@@ -28,7 +28,7 @@ const Header = () => {
           <div className="d-flex align-items-center">
             <img src={logo} alt="logo" width="40" height="30" className="d-inline-block align-text-top me-2" />
             <h3 className="text-dark fw-bold">
-              <span className="text-white me-1">Urban</span>
+              <span className="text-primary  fw-bold">Urban</span>
               <span className="me-1">Sage</span>
             </h3>
           </div>
@@ -49,11 +49,13 @@ const Header = () => {
                 <NavLink className="nav-link active ms-2 fs-5" to="/about" activeClassName="active-link">About</NavLink>
               </li>
             </CSSTransition>
+            {token !== null && (
             <CSSTransition in={true} appear={true} timeout={500} classNames="fade" key="rooms">
               <li className="nav-item">
-                <NavLink className="nav-link active ms-2 fs-5" to="/zz" activeClassName="active-link">products</NavLink>
+                <NavLink className="nav-link active ms-2 fs-5" to="/products" activeClassName="active-link">products</NavLink>
               </li>
             </CSSTransition>
+ )}
             <CSSTransition in={true} appear={true} timeout={500} classNames="fade" key="gallery">
               <li className="nav-item">
                 <NavLink className="nav-link active ms-2 fs-5" to="/gallery" activeClassName="active-link">Gallery</NavLink>
@@ -67,7 +69,7 @@ const Header = () => {
             {token !== null && (
               <CSSTransition in={true} appear={true} timeout={500} classNames="fade" key="cart">
                 <li className="nav-item">
-                  <NavLink className="nav-link active ms-2 fs-5" to="/cart" activeClassName="active-link">Cart</NavLink>
+                  <NavLink className="nav-link active ms-2 fs-5" to="/CartPage" activeClassName="active-link">Cart</NavLink>
                 </li>
               </CSSTransition>
             )}

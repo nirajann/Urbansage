@@ -10,9 +10,12 @@ import Products from "./components/Product/Product";
 import Gallery from "./components/Home/Gallery";
 import About from "./components/Home/About";
 import Contact from "./components/Home/Contact";
+import ProfilePage from "./components/Home/Profilepage"
+import EditProfilePage from "./components/Home/Editprofile"
 import "./style/Main.css"
  
 function App() {
+  
   return (
     <Router>
     <Header/>
@@ -24,7 +27,8 @@ function App() {
       <Route path="/Gallery" element={<Gallery/>}/>
       <Route path="/About" element={<About/>}/>
       <Route path="/Contact" element={<Contact/>}/>
-      
+      <Route path="/ProfilePage" element={<ProfilePage/>}/>
+      <Route path="/EditProfilePage" element={<EditProfilePage/>}/>
 
     </Routes>
      

@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 import '../../style/App.css';
+import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faShoppingCart ,faUser} from '@fortawesome/free-solid-svg-icons'
 
 const Header = () => {
   const token = localStorage.getItem('token');
   const siteName = 'UrbanSage';
   const logo = 'https://firebasestorage.googleapis.com/v0/b/passportpal-3d3d5.appspot.com/o/USlogo%2Fus.png?alt=media&token=f3a7c0f5-12d3-490f-9847-aff1360b0f3f';
+  const navigate = useNavigate();
+  const username = localStorage.getItem(`username`)
+
+
 
   const handleLogout = () => {
     localStorage.clear();
-    // Add any additional logout logic here
+    navigate('/');
   };
 
   return (
@@ -43,7 +51,7 @@ const Header = () => {
             </CSSTransition>
             <CSSTransition in={true} appear={true} timeout={500} classNames="fade" key="rooms">
               <li className="nav-item">
-                <NavLink className="nav-link active ms-2 fs-5" to="/rooms" activeClassName="active-link">products</NavLink>
+                <NavLink className="nav-link active ms-2 fs-5" to="/zz" activeClassName="active-link">products</NavLink>
               </li>
             </CSSTransition>
             <CSSTransition in={true} appear={true} timeout={500} classNames="fade" key="gallery">
@@ -69,6 +77,12 @@ const Header = () => {
           {token !== null ? (
             <>
               <button onClick={handleLogout} className="btn btn-danger ms-2 fw-bold fs-5" type="button">Logout</button>
+              <div class="vr  ms-2 " style={{width:'3px'}}></div>
+          <a href="/ProfilePage" className="btn  text-dark">
+          <FontAwesomeIcon icon={faUser} className="me-2" />
+          <span className="fw-bold text-uppercase d-none d-md-inline">  {username}</span>
+        
+        </a>
             </>
           ) : (
             <>

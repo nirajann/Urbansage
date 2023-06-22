@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 
-const Hostels = () => {
+const Products = () => {
     const navigate = useNavigate()
   const [products, setProducts] = useState("");
   useEffect(() => {
@@ -42,14 +42,14 @@ const Hostels = () => {
                       <div>
                         <h5 class="card-title">{product.name}</h5>
                         <h5>Description:{product.desc}</h5>
-                        <h5>Fees.{product.cheapestPrice}| per month</h5>
+                        <h5>Rs{product.cheapestPrice}</h5>
                         <h5>Address: {product.address}</h5>
                       </div>
                    
                 <div class="card-footer">
                 <Link to={`/HostelDetail/${product.id}`} state={{ productId: product._id, product }}>
   <button className="btn btn-success fw-bold fs-5" type="submit">
-    View Hostel
+    View Product
   </button>
 </Link>
                 </div>
@@ -61,10 +61,10 @@ const Hostels = () => {
  
         </div>
       </div>
-      {/* <!-- 
-{{!-- Available hostels sections section ends --}} */}
+
+
     </>
   );
 };
 
-export default Hostels;
+export default Products;

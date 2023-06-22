@@ -1,85 +1,100 @@
-import React from 'react'
-import userService from '../../services/loginService'
-import {useState ,useEffect} from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import userService from '../../services/loginService';
+import "../../style/login.css"
 
-
-const Login = (e) => {
-    const [Username,setusername] = useState('NirajanGautam')
-    const [password,setPassword] = useState('Nirajan123')
+const Login = () => {
+    const [Username, setUsername] = useState('nirajan');
+    const [password, setPassword] = useState('nriajan123');
     const [token, setToken] = useState("");
     const [userid, setUserid] = useState("");
-    const [username, setUsername] = useState("");
     const [Admin, setAdmin] = useState("");
+    const [errorMessage, setErrorMessage] = useState('');
+    const [loginMessage, setLoginMessage] = useState('');
   
-    const navigate = useNavigate()
- 
-    const handleLogin= (e) => {
-    
-            e.preventDefault();
-            
-            userService.login({Username,password}).then(res => {
-                alert(res.data)
-         
-                    setToken(window.localStorage.setItem(`token`,res.data.token))
-                    setUserid(window.localStorage.setItem(`userid`,res.data._id))
-                    setUsername(window.localStorage.setItem(`username`,Username))
-                    setAdmin(window.localStorage.setItem('admin',res.data.isAdmin))
-                navigate("/Hostels")
-            
-            
-            }).catch(err => console.log(err))
-      
-           
-    }
-  return (
-<>
-    <section id="login-form">
-        
-        <div class="container shadow-lg p-3  py-5 mt-5 rounded text-center ">
-           <div class="row ">
-                <h1 class="text-center">Login Here</h1>
-               <div class="col-md-6 mt-5">
-                  
-                   <div class="card   mt-3">
-                       <div class="card-body homeit">
-                            
-      
-                           <form onSubmit={handleLogin} action="POST"autocomplete="off">
-       
-                           <div class="form-floating mt-3">
-                               <input  class="form-control" name="username"   placeholder="UserName"
-                                type="username"
-                                value ={Username}
-                                onChange={(e)=> setusername(e.target.value)}
-                                    required/>
-                               <label for="floatingInputGroup1">Username</label>
-                           </div>
-       
-                           <div class="form-floating mt-3">
-                               <input type="password" class="form-control" name='password' placeholder='Password'
-                               value ={password}
-                               onChange={(e)=> setPassword(e.target.value)}
-                               />
-                               <label  for="floatingInputGroup1">Password</label>
-                            </div>
-                           <a class="btn btn-warning text-center mt-4 fw-bold fs-5"  onClick={handleLogin} value="Sign in" >Login</a>
-                           <a href="/register" class="btn btn-info ms-4  mt-4 fw-bold fs-5 " type="submit">Sign Up</a>
-                           </form>
-                       </div>
-      
-                   </div>
-                   </div>
-      
-                   <div class="col-md-6 mt-3">
-                       <img src="https://imgs.search.brave.com/I41ikO_ADjMpfOXh93dF0x0GfqsF0vOnvzdPdNmMlok/rs:fit:729:225:1/g:ce/aHR0cHM6Ly90c2Uz/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5N/QzRvYkhQZEo4akFO/cUxJdUU1c29RSGFF/MCZwaWQ9QXBp" alt="" class="mt-5 img-fluid"   />
-                   </div>
-               </div>
-           </div>
-      
-      </section>
-        </>
-  )
-}
+    const navigate = useNavigate();
 
-export default Login
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    userService.login({ Username, password })
+      .then((res) => {
+        setToken(window.localStorage.setItem(`token`,res.data.token))
+        setUserid(window.localStorage.setItem(`userid`,res.data._id))
+
+        setUsername(window.localStorage.setItem(`username`,Username))
+        setAdmin(window.localStorage.setItem('admin',res.data.isAdmin))
+        
+        navigate('/products');
+      })
+      .catch((err) => {
+        setErrorMessage('Incorrect username or password');
+        document.getElementById('login-message').classList.add('failure');
+      });
+  };
+
+  return (
+    <>
+      <section id="login-form">
+        <div className="container shadow-lg p-3 py-5 mt-5 rounded text-center">
+          <div className="row">
+            <h1 className="text-center">Login Here</h1>
+            <div className="col-md-6 mt-5">
+              <div className="card mt-3">
+                <div className="card-body homeit">
+                  <form onSubmit={handleLogin} autoComplete="off">
+                    <div className="form-floating mt-3">
+                      <input
+                        className="form-control"
+                        name="username"
+                        placeholder="UserName"
+                        type="username"
+                        value={Username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                      />
+                      <label htmlFor="floatingInputGroup1">Username</label>
+                    </div>
+
+                    <div className="form-floating mt-3">
+                      <input
+                        type="password"
+                        className="form-control"
+                        name="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                      <label htmlFor="floatingInputGroup1">Password</label>
+                    </div>
+
+                    <button className="btn btn-warning text-center mt-4 fw-bold fs-5" type="submit">
+                      Login
+                    </button>
+                    <a href="/register" className="btn btn-info ms-4 mt-4 fw-bold fs-5" type="submit">
+                      Sign Up
+                    </a>
+                  </form>
+                </div>
+              </div>
+              <div id="login-message" className={`message ${errorMessage ? 'failure' : ''}`}>
+  {loginMessage || errorMessage}
+</div>
+            </div>
+
+            <div className="col-md-6 mt-3">
+              <img
+                src="https://imgs.search.brave.com/I41ikO_ADjMpfOXh93dF0x0GfqsF0vOnvzdPdNmMlok/rs:fit:729:225:1/g:ce/aHR0cHM6Ly90c2Uz/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5N/QzRvYkhQZEo4akFO/cUxJdUU1c29RSGFF/MCZwaWQ9QXBp"
+                alt=""
+                className="mt-5 img-fluid"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default Login;

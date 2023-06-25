@@ -23,6 +23,8 @@ import ProductDetailPage from './components/Product//ProductDetail';
 import EditProductPage from "./components/adminpage/EditProductPage"
 import AdminContactPage from "./components/adminpage/AdmincontactPage"
 import "./style/Main.css"
+import Protected from "./components/Route/protected"
+import AdminProtected from "./components/Route/adminprotected"
  
 function App() {
   
@@ -33,24 +35,24 @@ function App() {
       <Route path="/" element={<Home/>}/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/register" element={<Register/>}/>
-      <Route path="/Products" element={<Products/>}/>
+      <Route path="/Products" element={<Protected Component={Products}/>}/>
       
-      <Route path="/productDetail/:id" element={<ProductDetailPage/>}/>
+      <Route path="/productDetail/:id" element={<Protected Component={ProductDetailPage}/>}/>
       <Route path="/Gallery" element={<Gallery/>}/>
       <Route path="/About" element={<About/>}/>
       <Route path="/Contact" element={<Contact/>}/>
-      <Route path="/ProfilePage" element={<ProfilePage/>}/>
-      <Route path="/EditProfilePage" element={<EditProfilePage/>}/>
-      <Route path="/OrderPage" element={<OrderPage/>}/>
-      <Route path="/CartPage" element={<Cart/>}/>
+      <Route path="/ProfilePage" element={<Protected Component={ProfilePage}/>}/>
+      <Route path="/EditProfilePage" element={<Protected Component={EditProfilePage}/>}/>
+      <Route path="/OrderPage" element={<Protected Component={OrderPage}/>}/>
+      <Route path="/CartPage" element={<Protected Component={Cart}/>}/>
 
       {/* admin panel */}
-      <Route path="/AdminPage" element={<AdminPage/>}/>
-      <Route path="/AdminorderPage" element={<AdminOrderPage/>}/>
-      <Route path="/AdminuserPage" element={<AdminUserPage/>}/>
-      <Route path="/AdminproductPage" element={<AdminproductPage/>}/>
-      <Route path="/AdminContactPage" element={<AdminContactPage/>}/>
-      <Route path="/EditProductPage/:id" element={<EditProductPage/>}/>
+      <Route path="/AdminPage" element={<AdminProtected Component={AdminPage}/>}/>
+      <Route path="/AdminorderPage" element={<AdminProtected Component={AdminOrderPage}/>}/>
+      <Route path="/AdminuserPage" element={<AdminProtected Component={AdminUserPage}/>}/>
+      <Route path="/AdminproductPage" element={<AdminProtected Component={AdminproductPage}/>}/>
+      <Route path="/AdminContactPage" element={<AdminProtected Component={AdminContactPage}/>}/>
+      <Route path="/EditProductPage/:id" element={<AdminProtected Component={EditProductPage}/>}/>
 
    
       

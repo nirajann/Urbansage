@@ -45,14 +45,14 @@ const AdminproductPage = () => {
   <div class="row">
     <div class="col-md-4">
       <div class="container text-center py-3">
-        <img src={product.photos} class="card-img-top" alt="..." />
+        <img src={`http://localhost:4000${product.photos[0]}`} class="card-img-top" alt="..." />
       </div>
     </div>
     <div class="col-md-8">
       <div>
         <h5 class="card-title">{product.name}</h5>
         <h5>Description:{product.desc}</h5>
-        <h5>Fees.{product.cheapestPrice}| per month</h5>
+        <h5>Rs {product.price}</h5>
         <h5>Address: {product.address}</h5>
       </div>
       <div class="card-footer">

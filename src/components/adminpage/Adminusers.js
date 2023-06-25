@@ -33,7 +33,7 @@ const AdminUserPage = () => {
           {users && users?.map((user) => {
              return (
             <tr key={user._id}>
-              <td>{user.Username}</td>
+              <td>{user.username}</td>
               <td>{user.email}</td>
               <td>
                 <button className="btn btn-danger mx-2" onClick={() => handleDeleteOrder(user._id)}>Delete</button>

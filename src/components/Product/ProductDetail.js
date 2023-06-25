@@ -27,23 +27,28 @@ const ProductDetailPage = ({ addToCart }) => {
       .catch((err) => console.log(err));
   };
 
-  const handleAddToCart = (e) => {
-    alert("Added To Cart")
+  const handleAddToCart = () => {
     const config = {
-      headers:
-      {
-          Authorization:
-              `bearer ${window.localStorage.getItem('token')}`
+      headers: {
+        Authorization: `Bearer ${window.localStorage.getItem('token')}`
       }
-  }
-  axios.post(`http://localhost:4000/cart/createCart?productid=${productId}`, { userid: window.localStorage.getItem('userid')}, config)
-
+    };
+  
+    const requestBody = {
+      userid: window.localStorage.getItem('userid')
+    };
+  
+    const url = `http://localhost:4000/cart/createCart?productid=${productId}&userid=${window.localStorage.getItem('userid')}`;
+  
+    axios.post(url, requestBody, config)
       .then((response) => {
         window.alert(response.data.status);
-        alert("Added To Cart")
+        alert("Added To Cart");
       })
       .catch((err) => console.log(err));
   };
+  
+  
 
   return (
     <div className="container product-detail-page">

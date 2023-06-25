@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import productService from '../../services/productServices';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 const EditProductPage = () => {
-    const navigate = useNavigate()
-  const { state: { product, productId } } = useLocation();
+  const navigate = useNavigate();
+  const { state } = useLocation();
+  const { product, productId } = state || {}; // Destructure product and productId from state
+
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
-  const [cheapestPrice, setCheapestPrice] = useState('');
+  const [price, setCheapestPrice] = useState('');
   const [address, setAddress] = useState('');
 
   useEffect(() => {
-    
-    setName(product.name);
-    setDesc(product.desc);
-    setCheapestPrice(product.cheapestPrice);
-    setAddress(product.address);
+    if (product) {
+      setName(product.name);
+      setDesc(product.desc);
+      setCheapestPrice(product.price);
+      setAddress(product.address);
+    }
   }, [product]);
 
   const handleNameChange = (event) => {
@@ -37,32 +39,25 @@ const EditProductPage = () => {
   };
 
   const handleSubmit = async () => {
-    
     try {
-        
-      axios.put(`http://localhost:4000/hostel/${productId}`, {
+      await axios.put(`http://localhost:4000/product/${productId}`, {
         name,
         description: desc,
-        cheapestPrice,
-        address
-      }
-      
-      ).then(() => {
-        navigate("/AdminproductPage");
-      }).catch((err) => console.log(err));
+        price,
+        address,
+      });
 
-
+      navigate('/AdminproductPage');
     } catch (error) {
       console.log(error);
       // handle error
     }
-    
   };
 
   return (
     <div className='container'>
       <h2 className='text-center'>Edit Hostel</h2>
-      <form onSubmit={handleSubmit} to="/AdminproductPage">
+      <form onSubmit={handleSubmit}>
         <div className='mb-3'>
           <label htmlFor='name' className='form-label'>
             Name
@@ -90,34 +85,36 @@ const EditProductPage = () => {
           />
         </div>
         <div className='mb-3'>
-          <label htmlFor='cheapestPrice' className='form-label'>
-            Cheapest Price
+          <label htmlFor='price' className='form-label'>
+          price
           </label>
           <input
             type='text'
             className='form-control'
-            id='cheapestPrice'
-            value={cheapestPrice}
-            onChange={handleCheapestPriceChange} />
-            </div>
-            <div className='mb-3'>
-              <label htmlFor='address' className='form-label'>
-                Address
-              </label>
-              <input
-                type='text'
-                className='form-control'
-                id='address'
-                value={address}
-                onChange={handleAddressChange}
-                required
-              />
-            </div>
-            <button type='submit' className='btn btn-primary'>
-              Save Changes
-            </button>
-          </form>
-        </div>);
-    }
-    
-    export default EditProductPage;
+            id='price'
+            value={price}
+            onChange={handleCheapestPriceChange}
+          />
+        </div>
+        <div className='mb-3'>
+          <label htmlFor='address' className='form-label'>
+            Address
+          </label>
+          <input
+            type='text'
+            className='form-control'
+            id='address'
+            value={address}
+            onChange={handleAddressChange}
+            required
+          />
+        </div>
+        <button type='submit' className='btn btn-primary'>
+          Save Changes
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default EditProductPage;

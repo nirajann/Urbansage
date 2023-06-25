@@ -4,7 +4,7 @@ import userService from '../../services/loginService';
 import "../../style/login.css"
 
 const Login = () => {
-    const [Username, setUsername] = useState('nirajan');
+    const [username, setUsername] = useState('nirajan');
     const [password, setPassword] = useState('nriajan123');
     const [token, setToken] = useState("");
     const [userid, setUserid] = useState("");
@@ -18,17 +18,19 @@ const Login = () => {
     const handleLogin = (e) => {
       e.preventDefault();
     
-      userService.login({ Username, password })
+      userService.login({ username, password })
         .then((res) => {
-
           setToken(window.localStorage.setItem(`token`,res.data.token))
-          setUserid(window.localStorage.setItem(`userid`,res.data.id))
-          setUsername(window.localStorage.setItem(`username`,Username))
+          setUserid(window.localStorage.setItem(`userid`,res.data.userId))
+          setUsername(window.localStorage.setItem(`username`,username))
           setAdmin(window.localStorage.setItem('admin',res.data.isAdmin))
-    
-    
-    
-          navigate('/products');
+          if (res.data.isAdmin === 'true' && res.data.token !== null) {
+            navigate('/AdminproductPage');
+          } else {
+            navigate('/products');
+          }
+      
+     
         })
         .catch((err) => {
           setErrorMessage('Incorrect username or password');
@@ -52,7 +54,7 @@ const Login = () => {
                         name="username"
                         placeholder="UserName"
                         type="username"
-                        value={Username}
+                        value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
                       />

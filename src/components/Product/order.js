@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const OrderPage = () => {
   const [orders, setOrders] = useState([]);
+  const userId = window.localStorage.getItem('userid');
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -14,7 +15,7 @@ const OrderPage = () => {
           },
         };
 
-        const response = await axios.get('http://localhost:4000/order/myorder', config);
+        const response = await axios.get(`http://localhost:4000/order/myorder?userId=${userId}`, config);
         setOrders(response.data);
       } catch (error) {
         console.log(error);
@@ -22,7 +23,7 @@ const OrderPage = () => {
     };
 
     fetchOrders();
-  }, []);
+  }, [userId]);
 
   const handleDeleteOrder = async (orderId) => {
     try {
@@ -40,6 +41,28 @@ const OrderPage = () => {
     }
   };
 
+  const handleUpdateOrder = async (orderId) => {
+    try {
+      const token = window.localStorage.getItem('token');
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      await axios.put(`http://localhost:4000/order/${orderId}`, null, config);
+      const updatedOrders = orders.map((order) => {
+        if (order._id === orderId) {
+          return { ...order, verified: true };
+        }
+        return order;
+      });
+      setOrders(updatedOrders);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <section id="contact-form">
       <div className="container shadow-lg p-3 mt-5 py-5 rounded text-center">
@@ -48,8 +71,8 @@ const OrderPage = () => {
           <table className="table">
             <thead>
               <tr>
-                <th>HostelName</th>
-                <th>username</th>
+                <th>Product Name</th>
+                <th>Username</th>
                 <th>Price</th>
                 <th>Action</th>
               </tr>
@@ -57,12 +80,22 @@ const OrderPage = () => {
             <tbody>
               {orders.map((order) => (
                 <tr key={order._id}>
-                  <td>{order.Hostelid.name}</td>
-                  <td>{order._id}</td>
-                  <td>RS </td>
+                  <td>{order.productId.name}</td>
+                  <td>{order.userId && order.userId.username}</td>
+                  <td>$ {order.productId.price * order.quantity}</td>
                   <td>
-                    <button className="btn btn-success mx-2">{order.verified}Verify</button>
-                    <button className="btn btn-danger mx-2" onClick={() => handleDeleteOrder(order._id)}>Delete</button>
+                    {order.verified ? (
+                      <button className="btn btn-success mx-2" disabled>
+                        Verified
+                      </button>
+                    ) : (
+                      <button className="btn btn-success mx-2" onClick={() => handleUpdateOrder(order._id)}>
+                        Verify
+                      </button>
+                    )}
+                    <button className="btn btn-danger mx-2" onClick={() => handleDeleteOrder(order._id)}>
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}

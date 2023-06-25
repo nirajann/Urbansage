@@ -14,24 +14,32 @@ const AdminproductPage = () => {
         .catch((err) => console.log(err));
     }, []);
   
-
     const handleDeleteProduct = async (productId) => {
-        try {
-          await productService.delete(productId);
-          setProducts(products.filter((product) => product._id !== productId));
-        } catch (err) {
-          console.log(err);
-        }
-      };
+      try {
+        const token = window.localStorage.getItem('token');
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+    
+        await axios.delete(`http://localhost:4000/product/${productId}`, config);
+        setProducts(products.filter((product) => product._id !== productId));
+        alert("Product has been removed.");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    
 
     return (
         <>
 
 <div class="container py-5">
-<Link to="/admin/hostels/new">
-            <button className="btn btn-success fw-bold fs-5">Add New Hostel</button>
+<Link to="/CreateProductForm">
+            <button className="btn btn-success fw-bold fs-5">Add New Products</button>
           </Link>
-        <h2 className="text-danger">Hostel Details</h2>
+        <h2 className="text-danger">Products Details</h2>
         {/* {
                         products && products?.data.map([product] => )
                         } */}

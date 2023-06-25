@@ -27,7 +27,7 @@ const Header = () => {
           <div className="d-flex align-items-center">
             <img src={logo} alt="logo" width="40" height="30" className="d-inline-block align-text-top me-2" />
             <h3 className="text-dark fw-bold">
-              <span className="text-primary fw-bold">Urban</span>
+              <span className="text-danger fw-bold">Urban</span>
               <span className="me-1">Sage</span>
             </h3>
           </div>

@@ -37,7 +37,7 @@ const Cart = () => {
   const handleOrder = async () =>  {
     await checkout.show({ amount: calculateTotalAmount() });
 
-    console.log(checkout)
+ 
     const orderDetails = {
       
       userId: window.localStorage.getItem("userid"),
@@ -139,7 +139,7 @@ const Cart = () => {
           <div key={cart._id} className="cart-item row mb-3">
             <div className="col-sm-2">
               <img
-                src={`http://localhost:4000${cart.productid.photos[0]}`}
+                src={`http://localhost:4000${cart.productid.photos[0]}  `}
                 alt={cart.productid.name}
                 className="img-fluid"
               />
@@ -147,8 +147,8 @@ const Cart = () => {
             <div className="col-md-8">
               <div className="card-body">
                 <h3 className="card-title">{cart.productid.name}</h3>
-                <p className="card-text">{cart.productid.desc}</p>
-                <div className="cart-item-price">${cart.productid.price}</div>
+                <p className="card-text">{cart.productid.type}</p>
+                <div className="cart-item-price">Rs{cart.productid.price}</div>
                 <div className="cart-item-quantity">
                   Quantity:{" "}
                   <input
@@ -164,7 +164,7 @@ const Cart = () => {
                   </button>
                 </div>
                 <div className="cart-item-total">
-                  Total: ${cart.productid.price * cart.quantity}
+                  Total: Rs{cart.productid.price * cart.quantity}
                 </div>
                 <button
                   className="btn btn-danger"
@@ -184,7 +184,7 @@ const Cart = () => {
           </button>
         </div>
       )}
-      <div className="cart-total">Total Amount: ${calculateTotalAmount() }</div>
+      <div className="cart-total">Total Amount: Rs {calculateTotalAmount() }</div>
       <div
         className="modal"
         tabIndex="-1"

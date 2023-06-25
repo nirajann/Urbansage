@@ -25,6 +25,7 @@ import AdminContactPage from "./components/adminpage/AdmincontactPage"
 import "./style/Main.css"
 import Protected from "./components/Route/protected"
 import AdminProtected from "./components/Route/adminprotected"
+import CreateProductForm from "./components/adminpage/Addproduct"
  
 function App() {
   
@@ -46,8 +47,10 @@ function App() {
       <Route path="/OrderPage" element={<Protected Component={OrderPage}/>}/>
       <Route path="/CartPage" element={<Protected Component={Cart}/>}/>
 
+
       {/* admin panel */}
       <Route path="/AdminPage" element={<AdminProtected Component={AdminPage}/>}/>
+      <Route path="/CreateProductForm" element={<AdminProtected Component={CreateProductForm}/>}/>
       <Route path="/AdminorderPage" element={<AdminProtected Component={AdminOrderPage}/>}/>
       <Route path="/AdminuserPage" element={<AdminProtected Component={AdminUserPage}/>}/>
       <Route path="/AdminproductPage" element={<AdminProtected Component={AdminproductPage}/>}/>

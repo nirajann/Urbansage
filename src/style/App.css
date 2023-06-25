@@ -1,5 +1,5 @@
 .active-link {
-  color: #00ff00; /* Green color for active link */
+  color: #00ff00; /* Light green color for active link */
   animation: link-pulse 0.5s infinite alternate; /* Animation for active link */
 }
 
@@ -10,6 +10,10 @@
   100% {
     transform: scale(1.1);
   }
+}
+
+.nav-link:hover {
+  color: lightgreen;
 }
 
 

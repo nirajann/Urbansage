@@ -56,7 +56,7 @@ const EditProductPage = () => {
 
   return (
     <div className='container'>
-      <h2 className='text-center'>Edit Hostel</h2>
+      <h2 className='text-center'>Edit Product</h2>
       <form onSubmit={handleSubmit}>
         <div className='mb-3'>
           <label htmlFor='name' className='form-label'>

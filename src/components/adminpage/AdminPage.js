@@ -16,7 +16,7 @@ const AdminPage = () => {
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/AdminproductPage">
-                  Hostels
+                  Products
                 </a>
               </li>
               <li className="nav-item">
@@ -53,10 +53,10 @@ const AdminPage = () => {
             <div className="col-md-4 mb-3">
               <div className="card">
                 <div className="card-body">
-                  <h5 className="card-title">Hostels</h5>
-                  <p className="card-text">View and manage hostels here</p>
+                  <h5 className="card-title">Products</h5>
+                  <p className="card-text">View and manage Products here</p>
                   <a href="/AdminproductPage" className="btn btn-primary">
-                    Go to Hostels
+                    Go to PRoducts
                   </a>
                 </div>
               </div>

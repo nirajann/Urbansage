@@ -1,9 +1,8 @@
 import React from 'react';
 
-
 const About = () => {
   return (
-    <section id="About" className="bg-light py-5">
+    <section id="About" className="bg-light py-5 pt-5" style={{ backgroundColor: '#800080' }}>
       <div className="container text-center">
         <div className="row">
           <div className="col-md-6 my-5">
@@ -17,8 +16,6 @@ const About = () => {
         </div>
       </div>
     </section>
-    
-
   );
 }
 

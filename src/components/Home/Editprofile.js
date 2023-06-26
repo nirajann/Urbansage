@@ -49,12 +49,13 @@ const EditProfilePage = () => {
     e.preventDefault();
     axios
       .put(`http://localhost:4000/users/${window.localStorage.getItem('userid')}`, {
-        Username: username,
+        username: username,
         email,
         location,
         interests,
       })
       .then(() => {
+        setUsername(window.localStorage.setItem(`username`,username))
         navigate("/ProfilePage");
       })
       .catch((err) => console.log(err));

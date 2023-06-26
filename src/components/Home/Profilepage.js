@@ -31,7 +31,7 @@ const ProfilePage = () => {
                 return (
                   <div className="card-body">
                     <img src={profilePic} className="card-img-top" alt="Profile" />
-                    <h5 className="card-title mb-0">{user.Username}</h5>
+                    <h5 className="card-title mb-0">{user.username}</h5>
                     <p className="card-text mb-1">Email: {user.email}</p>
                     <p className="card-text mb-1">Location: New York, USA</p>
                     <p className="card-text mb-0">Interests: Reading, Travelling</p>

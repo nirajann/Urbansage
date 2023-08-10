@@ -1,11 +1,19 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { useLocation, useParams } from "react-router-dom";
 import "./HostelDetailPage.css";
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import CommentsSection from "./comment"; // Import the CommentsSection component
+
 
 const ProductDetailPage = ({ addToCart }) => {
   const { state: { product, productId  } } = useLocation();
+
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
+  const [rating, setRating] = useState(0);
+
+  
   const navigate = useNavigate();
 
   const HandleOrder = (e) => {
@@ -47,6 +55,31 @@ const ProductDetailPage = ({ addToCart }) => {
       })
       .catch((err) => console.log(err));
   };
+
+  const handleAddComment = async () => {
+    if (newComment.trim() !== "") {
+      try {
+        // Retrieve the userId from localStorage
+        const userId = localStorage.getItem(`userid`);
+        
+        // Check if userId is available
+        if (!userId) {
+          console.error("User ID not found in localStorage");
+          return;
+        }
+  
+        const response = await axios.post(`http://localhost:4000/product/${productId}/addcomment`, {
+          userId,
+          text: newComment,
+        });
+  
+        setComments([...comments, response.data.comment]);
+        setNewComment("");
+      } catch (error) {
+        console.error("Error adding comment:", error);
+      }
+    }
+  };
   
   
 
@@ -54,9 +87,9 @@ const ProductDetailPage = ({ addToCart }) => {
     <div className="container product-detail-page">
       <h2>{product.name}</h2>
       <div className="row">
-        <div className="col-md-6">
+        <div className="col-md-5">
           
-          <img src={`http://localhost:4000${product.photos[0]}`} alt={product.name} className="img-fluid" />
+          <img src={`http://localhost:4000${product.photos[0]}`} alt={product.name} height={400}  width={500} className="" />
         </div>
         <div className="col-md-6">
           <p>{product.desc}</p>
@@ -87,7 +120,16 @@ const ProductDetailPage = ({ addToCart }) => {
           </div>
         </div>
       </div>
+      <CommentsSection
+           productId={productId}
+           handleAddComment={handleAddComment}
+           comments={comments}
+           newComment={newComment}
+           setNewComment={setNewComment}
+           setComments={setComments}
+        />
     </div>
+    
   );
 };
 

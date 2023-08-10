@@ -26,10 +26,10 @@ const Header = () => {
         <NavLink className="navbar-brand" to="/">
           <div className="d-flex align-items-center">
             <img src={logo} alt="logo" width="40" height="30" className="d-inline-block align-text-top me-2" />
-            <h3 className="text-dark fw-bold">
-              <span className="text-danger fw-bold">Urban</span>
-              <span className="me-1">Sage</span>
-            </h3>
+              <h3 className="text-dark fw-bold">
+                <span className="text-danger fw-bold">Urban</span>
+                <span className="me-1">Sage</span>
+              </h3>
           </div>
         </NavLink>
 
@@ -136,7 +136,7 @@ const Header = () => {
               <div className="vr ms-2" style={{ width: '3px' }}></div>
               <a href="/ProfilePage" className="btn text-dark">
                 <FontAwesomeIcon icon={faUser} className="me-2" />
-                <span className="fw-bold text-uppercase d-none d-md-inline">{username}</span>
+            
               </a>
             </>
           ) : (

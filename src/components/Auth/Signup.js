@@ -9,22 +9,57 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [valid, setValid] = useState("");
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
   const navigate = useNavigate();
+  let matched = false;
 
   useEffect(() => {
-    if (password === "" || confirmPassword === "") {
-      setMessage("Password is empty");
-      setValid("is-invalid");
-    } else if (password !== confirmPassword) {
+    // Validate if passwords match
+    const passwordsMatch = password === confirmPassword;
+    setIsPasswordValid(passwordsMatch);
+
+    // Password requirements
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumbers = /\d/.test(password);
+    const hasSpecialChars = /[!@#$%^&*()_+{}\[\]:;<>,.?~\-/\\]/.test(password);
+
+    const meetsRequirements =
+      password.length >= 8 &&
+      password.length <= 12 &&
+      hasUpperCase &&
+      hasLowerCase &&
+      hasNumbers &&
+      hasSpecialChars &&
+      !password.toLowerCase().includes(username) &&
+      !password.includes("123456") &&
+      !password.includes("password");
+
+    setIsPasswordValid(meetsRequirements);
+
+    if (!passwordsMatch) {
       setMessage("Passwords don't match");
-      setValid("is-invalid");
+      setValid(false);
+    } else if (!meetsRequirements) {
+      setMessage("Please follow password requirements: 8-12 characters, uppercase, lowercase, numbers, and special characters.");
+      setValid(false);
     } else {
-      setMessage("Passwords match");
-      setValid("is-valid");
+      setMessage("");
+      setValid(true);
     }
-  }, [confirmPassword, password]);
+  }, [confirmPassword, password, username]);
 
   const handleRegister = () => {
+    if (password === "" || confirmPassword === "") {
+      setMessage("Please enter a password and confirm it.");
+      return;
+    }
+
+    if (!isPasswordValid) {
+      setMessage("Please fix password issues.");
+      return;
+    }
+
     axios
       .post("http://localhost:4000/auth/registeruser", {
         username,
@@ -49,7 +84,6 @@ const Register = () => {
         console.log("Error:", error);
       });
   };
-
   return (
     <section id="register-form">
       <div className="container rounded text-center">
@@ -119,11 +153,12 @@ const Register = () => {
                   </div>
 
                   <div>
-                    {message && (
-                      <div className={`alert alert-danger mt-3`} role="alert">
-                        {message}
-                      </div>
-                    )}
+                    
+                  {message && (
+  <div className={`alert ${matched ? 'alert-danger' : 'alert-success'} mt-3`} role="alert">
+    {message}
+  </div>
+)}
                   </div>
 
                   <div className="col">
@@ -151,6 +186,7 @@ const Register = () => {
       </div>
     </section>
   );
-};
+                 
+                    };
 
 export default Register;

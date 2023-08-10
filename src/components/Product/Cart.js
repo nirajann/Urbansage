@@ -6,7 +6,7 @@ import cartService from "../../services/cart";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Cart = () => {
+const mainCart = () => {
   const checkout = new KhaltiCheckout(config);
   const navigate = useNavigate();
   let totalAmount = 0;
@@ -228,4 +228,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default mainCart;

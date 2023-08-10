@@ -4,6 +4,11 @@
 :root {
     --primary-color: #ff5722; /* Orange color */
   }
+
+  @import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
+
+
+
   
   /* Update the relevant elements with the orange color */
   .home h1 .text-orange,
